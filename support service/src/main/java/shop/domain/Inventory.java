@@ -38,14 +38,14 @@ public class Inventory {
     public static void decreaseInventory(DeliveryStarted deliveryStarted) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Inventory inventory = new Inventory();
-        repository().save(inventory);
-
-        InventoryDecreased inventoryDecreased = new InventoryDecreased(inventory);
-        inventoryDecreased.publishAfterCommit();
-        */
-
+        repository().findById(deliveryStarted.getOrderId()).ifPresent(inventory -> {
+            // 재고 감소
+            inventory.decreaseQuantity(deliveryStarted.getQuantity());
+            repository().save(inventory);
+    
+            InventoryDecreased inventoryDecreased = new InventoryDecreased(inventory);
+            inventoryDecreased.publishAfterCommit();
+        });
         /** Example 2:  finding and process
         
 
@@ -67,13 +67,14 @@ public class Inventory {
     public static void increaseInventory(DeliveryCancelled deliveryCancelled) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Inventory inventory = new Inventory();
-        repository().save(inventory);
-
-        InventoryIncreased inventoryIncreased = new InventoryIncreased(inventory);
-        inventoryIncreased.publishAfterCommit();
-        */
+        repository().findById(deliveryCancelled.getOrderId()).ifPresent(inventory -> {
+            // 재고 증가
+            inventory.increaseQuantity(deliveryCancelled.getQuantity());
+            repository().save(inventory);
+    
+            InventoryIncreased inventoryIncreased = new InventoryIncreased(inventory);
+            inventoryIncreased.publishAfterCommit();
+        });
 
         /** Example 2:  finding and process
         

@@ -44,13 +44,14 @@ public class Delivery {
     public static void startDelivery(OrderPlaced orderPlaced) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Delivery delivery = new Delivery();
-        repository().save(delivery);
+        repository().findById(orderPlaced.getOrderId()).ifPresent(delivery -> {
+            
+            delivery.setStatus("Delivery Start");
+            repository().save(delivery);
 
-        DeliveryStarted deliveryStarted = new DeliveryStarted(delivery);
-        deliveryStarted.publishAfterCommit();
-        */
+            DeliveryStarted deliveryStarted = new DeliveryStarted(delivery);
+            deliveryStarted.publishAfterCommit();
+        });
 
         /** Example 2:  finding and process
         
@@ -73,13 +74,14 @@ public class Delivery {
     public static void cancelDelivery(OrderCancelled orderCancelled) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Delivery delivery = new Delivery();
-        repository().save(delivery);
-
-        DeliveryCancelled deliveryCancelled = new DeliveryCancelled(delivery);
-        deliveryCancelled.publishAfterCommit();
-        */
+        repository().findById(orderCancelled.getOrderId()).ifPresent(delivery -> {
+            // 배송 상태 업데이트
+            delivery.setStatus("Delivery Cancel");
+            repository().save(delivery);
+    
+            DeliveryCancelled deliveryCancelled = new DeliveryCancelled(delivery);
+            deliveryCancelled.publishAfterCommit();
+        });
 
         /** Example 2:  finding and process
         

@@ -53,36 +53,26 @@ public class Order {
     public static void sendMail(InventoryIncreased inventoryIncreased) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Order order = new Order();
-        repository().save(order);
-
-        */
-
-        /** Example 2:  finding and process
-        
-
-        repository().findById(inventoryIncreased.get???()).ifPresent(order->{
-            
-            order // do something
+        repository().findById(inventoryIncreased.getId()).ifPresent(order -> {
+            sendEmailToCustomer(order);
             repository().save(order);
-
-
-         });
-        */
+        });
 
     }
+  
 
     //>>> Clean Arch / Port Method
     //<<< Clean Arch / Port Method
     public static void updateStatus(DeliveryStarted deliveryStarted) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Order order = new Order();
-        repository().save(order);
-
-        */
+        repository().findById(Long.valueOf(deliveryStarted.getOrderId())).ifPresent(order -> {
+            // 주문 상태 업데이트
+            order.setStatus("Delivery Start");
+            
+            // 변경 사항 저장
+            repository().save(order);
+        });
 
         /** Example 2:  finding and process
         
@@ -103,11 +93,13 @@ public class Order {
     public static void updateStatus(DeliveryCancelled deliveryCancelled) {
         //implement business logic here:
 
-        /** Example 1:  new item 
-        Order order = new Order();
-        repository().save(order);
-
-        */
+        repository().findById(Long.valueOf(deliveryCancelled.getOrderId())).ifPresent(order -> {
+            // 주문 상태 업데이트
+            order.setStatus("Delivery Cancel");
+            
+            // 변경 사항 저장
+            repository().save(order);
+        });
 
         /** Example 2:  finding and process
         
