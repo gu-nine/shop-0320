@@ -53,11 +53,15 @@ public class Order {
     public static void sendMail(InventoryIncreased inventoryIncreased) {
         //implement business logic here:
 
-        repository().findById(inventoryIncreased.getId()).ifPresent(order -> {
+        repository().findById(inventoryIncreased.getOrderId()).ifPresent(order -> {
             sendEmailToCustomer(order);
             repository().save(order);
         });
 
+    }
+    public static void sendEmailToCustomer(Order order) {
+        // 이메일 전송 로직 구현
+        System.out.println("Sending email to customer for order: " + order.getId());
     }
   
 

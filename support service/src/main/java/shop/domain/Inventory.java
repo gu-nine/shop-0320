@@ -38,7 +38,7 @@ public class Inventory {
     public static void decreaseInventory(DeliveryStarted deliveryStarted) {
         //implement business logic here:
 
-        repository().findById(deliveryStarted.getOrderId()).ifPresent(inventory -> {
+        repository().findById(Long.valueOf(deliveryStarted.getOrderId())).ifPresent(inventory -> {
             // 재고 감소
             inventory.decreaseQuantity(deliveryStarted.getQuantity());
             repository().save(inventory);
@@ -67,7 +67,7 @@ public class Inventory {
     public static void increaseInventory(DeliveryCancelled deliveryCancelled) {
         //implement business logic here:
 
-        repository().findById(deliveryCancelled.getOrderId()).ifPresent(inventory -> {
+        repository().findById(Long.valueOf(deliveryCancelled.getOrderId())).ifPresent(inventory -> {
             // 재고 증가
             inventory.increaseQuantity(deliveryCancelled.getQuantity());
             repository().save(inventory);

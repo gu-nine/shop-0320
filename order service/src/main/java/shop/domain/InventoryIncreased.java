@@ -9,6 +9,6 @@ import shop.infra.AbstractEvent;
 @ToString
 public class InventoryIncreased extends AbstractEvent {
 
-    private Long id;
+    private Long orderId;
     private Integer qty;
 }

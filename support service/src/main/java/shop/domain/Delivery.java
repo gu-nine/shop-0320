@@ -44,7 +44,7 @@ public class Delivery {
     public static void startDelivery(OrderPlaced orderPlaced) {
         //implement business logic here:
 
-        repository().findById(orderPlaced.getOrderId()).ifPresent(delivery -> {
+        repository().findById(Long.valueOf(orderPlaced.getOrderId())).ifPresent(delivery -> {
             
             delivery.setStatus("Delivery Start");
             repository().save(delivery);
@@ -74,7 +74,7 @@ public class Delivery {
     public static void cancelDelivery(OrderCancelled orderCancelled) {
         //implement business logic here:
 
-        repository().findById(orderCancelled.getOrderId()).ifPresent(delivery -> {
+        repository().findById(Long.valueOf(orderCancelled.getOrderId())).ifPresent(delivery -> {
             // 배송 상태 업데이트
             delivery.setStatus("Delivery Cancel");
             repository().save(delivery);
